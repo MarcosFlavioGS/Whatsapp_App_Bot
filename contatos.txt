@@ -1,0 +1,2 @@
+Teste de Bot
+https://api.whatsapp.com/send?phone=55XXXXXXXXXXX
