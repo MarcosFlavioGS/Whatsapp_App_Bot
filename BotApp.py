@@ -56,6 +56,7 @@ with open("email.txt", "r", encoding="UTF-8") as email_txt:
     for i in email_txt:
         useremail1.append(i)
     useremail = ''.join(useremail1)
+
 #Inicio
 print("********************************************************************************")
 print("**** O programa vai iniciar em 10 segundos... ")
@@ -65,58 +66,63 @@ time.sleep(10)
 
 #Abrir whatsapp_app
 pyautogui.press('winleft')
+time.sleep(3)
 pyautogui.write('whatsapp')
+time.sleep(1)
 pyautogui.press('Enter')
-time.sleep(10)
+time.sleep(15)
 
 
 #Procurar contato no whatsapp
 def busca_contato(contato):
-    print(contato)
-    pyautogui.moveTo(x=142, y=114)
+    pyautogui.moveTo(x=92, y=114)
     pyautogui.click()
     pyautogui.write(contato)
-    time.sleep(1)
-    pyautogui.press('enter')
     time.sleep(2)
+    pyautogui.press('enter')
+    time.sleep(4)
 
 #Mandar imagem
 def mandar_mensagem(filepath, mensagem):
     
-    pyautogui.moveTo(x=504, y=830)
+    pyautogui.moveTo(x=478, y=701)
     pyautogui.click()
-    time.sleep(1)
+    time.sleep(2)
     pyautogui.press('down')
+    time.sleep(2)
     pyautogui.press('enter')
-    time.sleep(3)
+    time.sleep(5)
     
     for i in filepath:  
         pyautogui.write(i)
         pyautogui.press('enter')
-        time.sleep(1)    
+        time.sleep(4)    
         pyautogui.press('enter')
-        time.sleep(2)
+        time.sleep(3)
 
         #Mandar mensagem
     for i in mensagem:
-        print(i)
         pyperclip.copy(i)
         pyautogui.hotkey("ctrl", "v")
         time.sleep(1)
         pyautogui.press('enter')
-        time.sleep(1)
+        time.sleep(4)
 
 #Função condicional para busca de contato não cadastrado via chrome
 def busca_online(contato):
     pyautogui.press('winleft')
+    time.sleep(3)
     pyautogui.write('Chrome')
+    time.sleep(3)
     pyautogui.press('enter')
-    time.sleep(5)
+    time.sleep(6)
     pyperclip.copy("https://api.whatsapp.com/send?phone=")
     pyautogui.hotkey("ctrl", "v")
+    time.sleep(1)
     pyautogui.write(contato)
+    time.sleep(1)
     pyautogui.press('enter')
-    time.sleep(5)
+    time.sleep(7)
 
 #Função para envio de email ao invés de whatsapp caso o contato seja um email
 def email(useremail, contato, emailMessage, titulo, secret):
@@ -156,10 +162,13 @@ def email(useremail, contato, emailMessage, titulo, secret):
 for contato in contatos: #Chamando funções
 
     if contato[:2] == "55":
-        print("Buscando contato online")
+        try:
+            print("Buscando contato online")
 
-        busca_online(contato)
-        mandar_mensagem(filepath, mensagem)
+            busca_online(contato)
+            mandar_mensagem(filepath, mensagem)
+        except:
+            print(f"Houve um problema. Verifique o contado: {contato}")    
     
     elif contato[:1] == "@":
         email(useremail, contato, emailMessage, titulo, secret)
@@ -171,3 +180,5 @@ for contato in contatos: #Chamando funções
             mandar_mensagem(filepath, mensagem)
         except:
             print(f"Um erro ocorreu. Verifique o contato: {contato}")
+
+input("Programa terminado. Digite 'Ok' para terminar: ")
