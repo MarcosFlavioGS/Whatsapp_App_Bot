@@ -75,7 +75,7 @@ time.sleep(15)
 
 #Procurar contato no whatsapp
 def busca_contato(contato):
-    pyautogui.moveTo(x=92, y=114)
+    pyautogui.moveTo(x=93, y=114) #Mudar a posição dependendo do tamanho da tela
     pyautogui.click()
     pyautogui.write(contato)
     time.sleep(2)
@@ -85,7 +85,7 @@ def busca_contato(contato):
 #Mandar imagem
 def mandar_mensagem(filepath, mensagem):
     
-    pyautogui.moveTo(x=478, y=701)
+    pyautogui.moveTo(x=478, y=701) #Mudar a posição dependendo do tamanho da tela
     pyautogui.click()
     time.sleep(2)
     pyautogui.press('down')
