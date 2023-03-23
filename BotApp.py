@@ -12,55 +12,40 @@ pyautogui.FAILSAFE = True
 #Abrir arquivos
 #Abrir arquivo de contatos
 with open("contatos.txt", "r")as contatos_txt:
-    contatos = []
-    for i in contatos_txt:
-        i = i.strip()
-        contatos.append(i)
+    contatos = [i.strip() for i in contatos_txt]
 
 #Caminho para arquivo de imagem
 with open("filepath.txt", "r") as filepath_txt:
-    filepath = []
-    for i in filepath_txt:
-        filepath.append(i)
+    filepath = [i for i in filepath_txt]
 
 #Abrir arquivo de mensagem
 with open("mensagem.txt", "r", encoding="UTF-8") as mensagem_txt:
-    mensagem = []
-    for i in mensagem_txt:
-        mensagem.append(i)
+    mensagem = [i for i in mensagem_txt]
 
 # Abrir arquivo de mensagem do email
 with open("mensagem_email.txt", "r", encoding="UTF-8") as mensagememail_txt:
-    emailMessage1 = []
-    for i in mensagememail_txt:
-        emailMessage1.append(i)
+    emailMessage1 = [i for i in mensagememail_txt]
     emailMessage = ''.join(emailMessage1)
 
 #Abrir arquivo de titulo de email
 with open("titulo_email.txt", "r", encoding="UTF-8") as titulo_txt:
-    titulo1 = []
-    for i in titulo_txt:
-        titulo1.append(i)
-    titulo = ''.join(titulo1)    
+    titulo1 = [i for i in titulo_txt]
+    titulo = ''.join(titulo1)
 
 # Abrir arquivo de senha
 with open("senha_email.txt", "r", encoding="UTF-8") as password_txt:
-    secret1 = []
-    for i in password_txt:
-        secret1.append(i)
-    secret = ''.join(secret1)    
+    secret1 = [i for i in password_txt]
+    secret = ''.join(secret1)
 
 # Abrir arquivo de email
 with open("email.txt", "r", encoding="UTF-8") as email_txt:
-    useremail1 = []
-    for i in email_txt:
-        useremail1.append(i)
+    useremail1 = [i for i in email_txt]
     useremail = ''.join(useremail1)
 
 #Inicio
 print("********************************************************************************")
 print("**** O programa vai iniciar em 10 segundos... ")
-print("**** Por favor não usar movimentar o mouse nem usar o teclado durante a execução")
+print("**** Por favor não movimentar o mouse nem usar o teclado durante a execução")
 print("********************************************************************************")
 time.sleep(10)
 
@@ -171,7 +156,10 @@ for contato in contatos: #Chamando funções
             print(f"Houve um problema. Verifique o contado: {contato}")    
     
     elif contato[:1] == "@":
-        email(useremail, contato, emailMessage, titulo, secret)
+        try:
+            email(useremail, contato, emailMessage, titulo, secret)
+        except:
+            print(f"Erro ao tentar enviar email. Verifique o contato: {contato}")
     
     else:
         print("Executando Bot")
@@ -181,4 +169,4 @@ for contato in contatos: #Chamando funções
         except:
             print(f"Um erro ocorreu. Verifique o contato: {contato}")
 
-input("Programa terminado. Digite 'Ok' para terminar: ")
+input("Programa terminado. Aperte qualquer tecla para terminar: ")
