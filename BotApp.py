@@ -2,9 +2,6 @@
 import pyautogui
 import time
 import pyperclip #Precisei porque o pyautogui é uma porcaria para escrever caracteres especiais
-import smtplib
-import ssl
-from email.message import EmailMessage
 
 # Mover o mouse para o canto superior esquerdo para parar o processo
 pyautogui.FAILSAFE = True
@@ -21,26 +18,6 @@ with open("filepath.txt", "r") as filepath_txt:
 #Abrir arquivo de mensagem
 with open("mensagem.txt", "r", encoding="UTF-8") as mensagem_txt:
     mensagem = [i for i in mensagem_txt]
-
-# Abrir arquivo de mensagem do email
-with open("mensagem_email.txt", "r", encoding="UTF-8") as mensagememail_txt:
-    emailMessage1 = [i for i in mensagememail_txt]
-    emailMessage = ''.join(emailMessage1)
-
-#Abrir arquivo de titulo de email
-with open("titulo_email.txt", "r", encoding="UTF-8") as titulo_txt:
-    titulo1 = [i for i in titulo_txt]
-    titulo = ''.join(titulo1)
-
-# Abrir arquivo de senha
-with open("senha_email.txt", "r", encoding="UTF-8") as password_txt:
-    secret1 = [i for i in password_txt]
-    secret = ''.join(secret1)
-
-# Abrir arquivo de email
-with open("email.txt", "r", encoding="UTF-8") as email_txt:
-    useremail1 = [i for i in email_txt]
-    useremail = ''.join(useremail1)
 
 #Inicio
 print("********************************************************************************")
@@ -108,41 +85,6 @@ def busca_online(contato):
     time.sleep(1)
     pyautogui.press('enter')
     time.sleep(7)
-
-#Função para envio de email ao invés de whatsapp caso o contato seja um email
-def email(useremail, contato, emailMessage, titulo, secret):
-    subject = f"{titulo}"
-    body = f"{emailMessage}"
-    sender_email = f"{useremail}"
-    receiver_email = f"{contato[1:]}"
-    password = f"{secret}" #Aqui é o local de senha do email. Porém, é melhor usar algum tipo de arquivo criptografado
-
-    message = EmailMessage()
-    message["From"] = sender_email
-    message["To"] = receiver_email
-    message["Subject"] = subject
-
-    #Formatação html
-    html = f"""
-    <html>
-        <body>
-            <h1>{subject}</h1>
-            <p>{body}</p>
-        </body>
-    </html>
-    """
-
-    message.add_alternative(html, subtype="html")
-
-    context = ssl.create_default_context()
-
-    print("ENVIANDO EMAIL!")
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
-
-    print("Email enviado")
 
 for contato in contatos: #Chamando funções
 
